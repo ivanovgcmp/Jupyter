@@ -1,13 +1,19 @@
 import requests
 import xmltodict
 
-url = "http://www.cbr.ru/scripts/XML_daily.asp"
+url = "http://www.cbr.ru/scripts/XML_val.asp"
 response = requests.get(url)
+
+response.content
+
 data = xmltodict.parse(response.content)
-print(data)
+
+items = []
+for item in data['Valuta']['Item']:
+    items.append(item)
 
 my_array = []
-for item in data['ValCurs']['Valute']:
-    my_set = [item['CharCode'], item['Name'], item['Value']];
+for item in data['Valuta']['Item']:
+    my_set = [item['Name'], item['EngName'], item['Nominal'], item['ParentCode']];
     my_array.append(my_set)
     print(my_set)
